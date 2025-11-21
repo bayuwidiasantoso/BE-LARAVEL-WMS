@@ -1,59 +1,399 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📦 Warehouse Management System (WMS)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Selamat datang di **Warehouse Management System (WMS)** — aplikasi lengkap berbasis **Laravel 12 (REST API)** dan **Vue 3 + Vite + TypeScript + TailwindCSS** untuk mengelola data barang, transaksi stok, laporan, dan roles user (admin/staff) secara profesional.
 
-## About Laravel
+README ini menjelaskan:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* Cara instalasi backend (Laravel)
+* Cara instalasi frontend (Vue)
+* Cara login
+* Role & Hak Akses
+* Daftar fitur lengkap
+* Cara penggunaan dari awal sampai akhir
+* Struktur API & alur data
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# 🚀 1. Teknologi Utama
 
-## Learning Laravel
+## Backend (API)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+* **Laravel 12**
+* Laravel **Sanctum** (API Token)
+* PostgreSQL
+* Maatwebsite Excel (import/export Excel)
+* DomPDF (export PDF)
+* Middleware RBAC (Role-Based Access Control)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Frontend
 
-## Laravel Sponsors
+* **Vue 3**
+* Vite
+* TypeScript
+* TailwindCSS
+* Vue Router
+* Chart.js (Dashboard grafik)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+# 🛠️ 2. Instalasi Backend (Laravel 12)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2.1 Clone project
 
-## Contributing
+```bash
+git clone <repo-url>
+cd backend-wms
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 2.2 Install dependencies
 
-## Code of Conduct
+```bash
+composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 2.3 Copy environment
 
-## Security Vulnerabilities
+```bash
+cp .env.example .env
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2.4 Setting database (PostgreSQL)
 
-## License
+Di file `.env`:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=wms
+DB_USERNAME=postgres
+DB_PASSWORD=yourpass
+```
+
+### 2.5 Jalankan migrasi + seeder user
+
+```bash
+php artisan migrate --seed
+```
+
+Seeder membuat 2 akun default:
+
+* Admin: `admin@example.com` / `password`
+* Staff: `staff@example.com` / `password`
+
+### 2.6 Jalankan server
+
+```bash
+php artisan serve
+```
+
+API default di:
+**[http://localhost:8000/api](http://localhost:8000/api)**
+
+---
+
+# 🎨 3. Instalasi Frontend (Vue 3)
+
+### 3.1 Masuk folder frontend
+
+```bash
+cd frontend-wms
+```
+
+### 3.2 Install dependency
+
+```bash
+npm install
+```
+
+### 3.3 Jalankan dev server
+
+```bash
+npm run dev
+```
+
+Frontend jalan di:
+**[http://localhost:5173](http://localhost:5173)**
+
+### 3.4 Setting API URL
+
+Edit `.env`:
+
+```
+VITE_API_BASE_URL=http://localhost:8000/api
+```
+
+---
+
+# 🔐 4. Login & Role
+
+Aplikasi mendukung dua role:
+
+## Role: Admin
+
+✔ CRUD Barang
+✔ Import / Export Barang
+✔ Import / Export Transaksi
+✔ Activity Logs
+✔ Dashboard
+✔ Laporan Stok
+✔ Semua endpoint API
+
+## Role: Staff
+
+✔ Lihat barang
+✔ Tambah transaksi
+✔ Lihat transaksi
+✔ Lihat laporan stok
+✔ Dashboard
+✘ Tidak bisa CRUD barang
+✘ Tidak bisa export/import barang
+✘ Tidak bisa akses activity logs
+
+## Cara login
+
+1. Buka `http://localhost:5173/login`
+2. Masukkan email & password
+3. Setelah login → otomatis masuk ke Dashboard
+
+---
+
+# 📘 5. Fitur-Fitur Utama
+
+## 5.1 Dashboard
+
+* Grafik transaksi 30 hari terakhir
+* Summary cepat:
+
+  * Total transaksi
+  * Total qty masuk
+  * Total qty keluar
+  * Jumlah transaksi masuk
+  * Jumlah transaksi keluar
+
+## 5.2 Master Barang
+
+Fitur admin:
+
+* Tambah barang
+* Edit barang
+* Hapus barang
+* Import Excel barang
+* Export Excel
+* Export PDF
+* Download Template Excel
+
+Fitur staff:
+
+* Hanya bisa melihat
+
+Fitur umum:
+
+* Search by nama/sku/lokasi
+* Sort ascending/descending
+* Detail barang + riwayat transaksi
+
+## 5.3 Transaksi Barang
+
+Fitur untuk admin & staff:
+
+* Barang Masuk
+* Barang Keluar
+* Update stok otomatis
+* Validasi agar stok tidak minus
+* Filter transaksi by:
+
+  * jenis
+  * tanggal
+  * barang
+* Sort transaksi
+* Pagination
+* Import transaksi via Excel
+* Export Excel & PDF
+
+## 5.4 Laporan Stok Rendah
+
+Menampilkan barang:
+
+* stok < stok_minimum
+  atau
+* stok < threshold global (default 10)
+
+Fitur:
+
+* Pagination
+* Load More
+* Mode otomatis (stok_minimum atau global threshold)
+
+## 5.5 Autocomplete Barang (SKU / Nama)
+
+Fitur untuk memudahkan input transaksi:
+
+* Mengetik sebagian nama/sku → muncul suggestion
+* Cepat dan efisien
+
+## 5.6 Activity Log (admin-only)
+
+Mencatat:
+
+* Create barang
+* Update barang
+* Delete barang
+* Import
+* Export
+* Transaksi
+
+---
+
+# 🔌 6. Alur Penggunaan (Step-by-Step)
+
+## 6.1 Login terlebih dulu
+
+Masuk sebagai admin atau staff.
+
+## 6.2 Admin setup awal barang
+
+1. Buka menu **Barang**
+2. Klik **Tambah Barang**
+3. Isi detail barang
+4. Simpan
+
+Atau bisa import banyak barang pakai Excel.
+
+## 6.3 Tambah transaksi stok
+
+1. Buka menu **Transaksi**
+2. Pilih barang via autocomplete
+3. Pilih jenis: MASUK / KELUAR
+4. Isi qty
+5. Simpan
+
+Stok barang otomatis berubah.
+
+## 6.4 Lihat grafik di Dashboard
+
+Dashboard langsung ter-update setiap transaksi masuk/keluar.
+
+## 6.5 Cek laporan stok rendah
+
+Menu **Laporan Stok** menampilkan barang yang hampir habis.
+
+## 6.6 Export laporan
+
+* Export transaksi ke Excel/PDF
+* Export barang ke Excel/PDF
+
+## 6.7 Import data
+
+* Barang: admin-only
+* Transaksi: admin & staff
+
+## 6.8 Detail barang + Riwayat
+
+Klik item → tampil riwayat sampai 100 transaksi terakhir.
+
+---
+
+# 📡 7. Struktur API (Ringkas)
+
+### Auth
+
+```
+POST /auth/login
+GET  /auth/me
+POST /auth/logout
+```
+
+### Barang
+
+```
+GET    /barang
+GET    /barang/autocomplete?q=
+POST   /barang (admin)
+PUT    /barang/{id} (admin)
+DELETE /barang/{id} (admin)
+GET    /barang/{id}/detail
+```
+
+### Transaksi
+
+```
+GET  /transaksi
+POST /transaksi
+```
+
+### Laporan
+
+```
+GET /laporan/stok-rendah
+```
+
+### Export
+
+```
+GET /exports/barang
+GET /exports/barang-pdf
+GET /exports/transaksi
+GET /exports/transaksi-pdf
+```
+
+### Import
+
+```
+POST /imports/barang (admin)
+POST /imports/transaksi
+```
+
+### Template
+
+```
+GET /imports/barang/template
+GET /imports/transaksi/template
+```
+
+---
+
+# 📁 8. Struktur Folder Penting
+
+## Backend
+
+```
+app/
+  Http/
+    Controllers/Api/
+    Middleware/
+  Models/
+exports/
+imports/
+routes/api.php
+bootstrap/app.php  ← tempat daftar middleware
+```
+
+## Frontend
+
+```
+src/
+  api/client.ts
+  composables/useAuth.ts
+  views/*.vue
+  components/*.vue
+  router/index.ts
+```
+
+---
+
+# 🧪 9. Testing Manual yang Direkomendasikan
+
+1. Login admin → cek menu lengkap
+2. Login staff → pastikan menu admin hilang
+3. Tambah barang → muncul di tabel
+4. Edit barang → berubah sesuai input
+5. Hapus barang → hilang dari tabel
+6. Tambah transaksi → stok berubah
+7. Transaksi keluar melebihi stok → error validasi
+8. Import Excel barang → data masuk
+9. Import Excel transaksi → stok berubah otomatis
+10. Export Excel/PDF → file berhasil diunduh
+11. Cek laporan stok rendah → tampil sesuai kondisi
+12. Autocomplete → suggestion muncul
+13. Activity Log → mencatat semua kegiatan admin
