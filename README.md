@@ -1,6 +1,6 @@
 # 📦 Warehouse Management System (WMS)
 
-Selamat datang di **Warehouse Management System (WMS)** — aplikasi lengkap berbasis **Laravel 12 (REST API)** dan **Vue 3 + Vite + TypeScript + TailwindCSS** untuk mengelola data barang, transaksi stok, laporan, dan roles user (admin/staff) secara profesional.
+Selamat datang di **Warehouse Management System (WMS)** — aplikasi lengkap berbasis **Laravel 12 (REST API)** dan **Vue 3 + Vite + TypeScript + TailwindCSS** untuk mengelola data barang, transaksi stok, laporan, dan roles user (admin/staff).
 
 README ini menjelaskan:
 
@@ -8,8 +8,6 @@ README ini menjelaskan:
 * Cara instalasi frontend (Vue)
 * Cara login
 * Role & Hak Akses
-* Daftar fitur lengkap
-* Cara penggunaan dari awal sampai akhir
 * Struktur API & alur data
 
 ---
@@ -21,8 +19,6 @@ README ini menjelaskan:
 * **Laravel 12**
 * Laravel **Sanctum** (API Token)
 * PostgreSQL
-* Maatwebsite Excel (import/export Excel)
-* DomPDF (export PDF)
 * Middleware RBAC (Role-Based Access Control)
 
 ## Frontend
@@ -31,8 +27,6 @@ README ini menjelaskan:
 * Vite
 * TypeScript
 * TailwindCSS
-* Vue Router
-* Chart.js (Dashboard grafik)
 
 ---
 
@@ -134,10 +128,8 @@ Aplikasi mendukung dua role:
 ✔ CRUD Barang
 ✔ Import / Export Barang
 ✔ Import / Export Transaksi
-✔ Activity Logs
 ✔ Dashboard
 ✔ Laporan Stok
-✔ Semua endpoint API
 
 ## Role: Staff
 
@@ -147,14 +139,11 @@ Aplikasi mendukung dua role:
 ✔ Lihat laporan stok
 ✔ Dashboard
 ✘ Tidak bisa CRUD barang
-✘ Tidak bisa export/import barang
-✘ Tidak bisa akses activity logs
 
 ## Cara login
 
 1. Buka `http://localhost:5173/login`
 2. Masukkan email & password
-3. Setelah login → otomatis masuk ke Dashboard
 
 ---
 
@@ -206,10 +195,6 @@ Fitur untuk admin & staff:
   * jenis
   * tanggal
   * barang
-* Sort transaksi
-* Pagination
-* Import transaksi via Excel
-* Export Excel & PDF
 
 ## 5.4 Laporan Stok Rendah
 
@@ -219,29 +204,11 @@ Menampilkan barang:
   atau
 * stok < threshold global (default 10)
 
-Fitur:
-
-* Pagination
-* Load More
-* Mode otomatis (stok_minimum atau global threshold)
-
 ## 5.5 Autocomplete Barang (SKU / Nama)
 
 Fitur untuk memudahkan input transaksi:
 
 * Mengetik sebagian nama/sku → muncul suggestion
-* Cepat dan efisien
-
-## 5.6 Activity Log (admin-only)
-
-Mencatat:
-
-* Create barang
-* Update barang
-* Delete barang
-* Import
-* Export
-* Transaksi
 
 ---
 
@@ -379,21 +346,3 @@ src/
   components/*.vue
   router/index.ts
 ```
-
----
-
-# 🧪 9. Testing Manual yang Direkomendasikan
-
-1. Login admin → cek menu lengkap
-2. Login staff → pastikan menu admin hilang
-3. Tambah barang → muncul di tabel
-4. Edit barang → berubah sesuai input
-5. Hapus barang → hilang dari tabel
-6. Tambah transaksi → stok berubah
-7. Transaksi keluar melebihi stok → error validasi
-8. Import Excel barang → data masuk
-9. Import Excel transaksi → stok berubah otomatis
-10. Export Excel/PDF → file berhasil diunduh
-11. Cek laporan stok rendah → tampil sesuai kondisi
-12. Autocomplete → suggestion muncul
-13. Activity Log → mencatat semua kegiatan admin
